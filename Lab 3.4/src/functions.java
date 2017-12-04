@@ -2,44 +2,53 @@
 public class functions {
 	public static void main (String [] args)
 	{
-		int[] test1 = {2,6,8,7,2};
-		partition(test1,0,4);
+		int[] test1 = {9,6,8,7,2};
+		System.out.println(partition(test1,0,4));
+		quickSort(test1,1,4);
 		printArrayint(test1);
 	}
-	public static void partition(int[] list1, int front, int back)
+	private static int partition(int[] list, int front, int back)
 	{
-		int[] newarr=new int[list1.length]; 
-		int temp = 0;
-		for(int i = temp; i < front; i++)
-		{
-			newarr[i]=list1[i];
-		}
-		int pivot = list1[front];
-		for (int h = front; h <= back; h++)
-		{
-			if (list1[h] <= pivot)
+	    int pivot = list[front];
+	    int low = front + 1;
+	    int high = back;
+	    while (high > low) 
+	    {
+	    	while (low <= high && list[low] <= pivot)
+	    	{
+		    	low++;
+	    	}
+			while (low <= high && list[high] > pivot)
 			{
-				newarr[temp]=list1[h];
-				temp++;
+		        high--;
 			}
-		}
-		for (int z = front; z <= back; z++)
-		{
-			if (list1[z] > pivot)
+			if (high > low)
 			{
-				newarr[temp] = list1[z];
-				temp++;
+				int temp = list[high];
+				list[high] = list[low];
+				list[low] = temp;
 			}
+	    }
+	    while (high > front && list[high] >= pivot)
+	    {
+	    	high--;
 		}
-		for(int j =back+1 ; j<list1.length ; j++)
-		{
-			newarr[j]=list1[j];
-		}
-		list1 = newarr;
-	}
+	    if (pivot > list[high]) 
+	    {
+	    	list[front] = list[high];
+	        list[high] = pivot;
+	        return high;
+	    }
+	    return front;
+    }
 	public static void quickSort(int[] list1, int front, int back)
 	{
-		
+		if(front<back)
+		{
+			int findpivot = partition(list1, front, back);
+		    quickSort(list1, front, findpivot - 1);
+		    quickSort(list1, findpivot + 1, back);
+		}
 	}
 	public static void printArrayint(int[] arr)
 	{
